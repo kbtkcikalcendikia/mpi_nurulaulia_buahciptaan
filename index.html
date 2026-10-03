@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buah Ciptaan Allah - Media Pembelajaran TK A</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Comic Neue for friendly child-like typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for friendly icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        comic: ['Comic Neue', 'cursive'],
+                    },
+                    colors: {
+                        brandYellow: '#FFDE59',
+                        brandOrange: '#FF914D',
+                        brandGreen: '#7ED957',
+                        brandPink: '#FF66C4',
+                        brandSky: '#00B4D8',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #fffde7 50%, #ffebee 100%);
+            min-height: 100vh;
+            user-select: none;
+        }
+
+        /* Bounce animation for interactive elements */
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-slow {
+            animation: bounceSlow 2.5s infinite ease-in-out;
+        }
+
+        /* Wiggle animation */
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+        .animate-wiggle:hover {
+            animation: wiggle 0.4s ease-in-out infinite;
+        }
+
+        /* Float animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff3e0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb74d;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-gray-800">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b-4 border-brandOrange">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-12 h-12 bg-brandYellow rounded-full flex items-center justify-center shadow-md animate-bounce-slow">
+                    <i class="fa-solid fa-apple-whole text-2xl text-red-500"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-orange-600 tracking-wide">Dunia Buah Ciptaan Allah</h1>
+                    <p class="text-xs text-gray-500 font-semibold">Sentra Persiapan • TK A</p>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menuBtn" class="md:hidden text-gray-700 text-2xl focus:outline-none p-2 bg-yellow-100 rounded-xl" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav id="navMenu" class="hidden md:flex flex-col md:flex-row w-full md:w-auto mt-3 md:mt-0 space-y-2 md:space-y-0 md:space-x-2 font-semibold">
+                <button onclick="switchTab('home')" class="nav-btn px-4 py-2 rounded-2xl transition-all duration-300 flex items-center space-x-2 bg-brandYellow text-gray-800 shadow-md transform hover:scale-105" data-tab="home">
+                    <i class="fa-solid fa-house text-orange-500"></i><span>Home</span>
+                </button>
+                <button onclick="switchTab('tujuan')" class="nav-btn px-4 py-2 rounded-2xl transition-all duration-300 flex items-center space-x-2 bg-white hover:bg-yellow-100 text-gray-700 shadow-sm transform hover:scale-105" data-tab="tujuan">
+                    <i class="fa-solid fa-bullseye text-red-500"></i><span>Tujuan</span>
+                </button>
+                <button onclick="switchTab('materi')" class="nav-btn px-4 py-2 rounded-2xl transition-all duration-300 flex items-center space-x-2 bg-white hover:bg-yellow-100 text-gray-700 shadow-sm transform hover:scale-105" data-tab="materi">
+                    <i class="fa-solid fa-basket-shopping text-green-600"></i><span>Materi Buah</span>
+                </button>
+                <button onclick="switchTab('kuis')" class="nav-btn px-4 py-2 rounded-2xl transition-all duration-300 flex items-center space-x-2 bg-white hover:bg-yellow-100 text-gray-700 shadow-sm transform hover:scale-105" data-tab="kuis">
+                    <i class="fa-solid fa-star text-amber-500"></i><span>Kuis Interaktif</span>
+                </button>
+                <button onclick="switchTab('game')" class="nav-btn px-4 py-2 rounded-2xl transition-all duration-300 flex items-center space-x-2 bg-white hover:bg-yellow-100 text-gray-700 shadow-sm transform hover:scale-105" data-tab="game">
+                    <i class="fa-solid fa-puzzle-piece text-pink-500"></i><span>Drag & Drop</span>
+                </button>
+                <button onclick="switchTab('tentang')" class="nav-btn px-4 py-2 rounded-2xl transition-all duration-300 flex items-center space-x-2 bg-white hover:bg-yellow-100 text-gray-700 shadow-sm transform hover:scale-105" data-tab="tentang">
+                    <i class="fa-solid fa-user-graduate text-blue-500"></i><span>Tentang</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6 my-4">
+
+        <!-- ================= TAB 1: HOME ================= -->
+        <section id="tab-home" class="tab-content">
+            <div class="bg-gradient-to-r from-amber-100 via-yellow-50 to-orange-100 rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-yellow-300 relative overflow-hidden">
+                <!-- Decorative floating fruits -->
+                <div class="absolute -top-6 -right-6 text-7xl opacity-30 animate-float">🍎</div>
+                <div class="absolute bottom-4 -left-4 text-7xl opacity-30 animate-float" style="animation-delay: 1s;">🍌</div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative z-10">
+                    <div class="space-y-6 text-center md:text-left">
+                        <span class="bg-orange-500 text-white text-sm sm:text-base font-bold px-4 py-1.5 rounded-full shadow-md inline-block">
+                            🌟 Selamat Datang Anak-Anak Hebat! 🌟
+                        </span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-orange-600 leading-tight">
+                            Mengenal Berbagai Macam Buah Ciptaan Allah SWT
+                        </h2>
+                        <p class="text-lg sm:text-xl text-gray-700 font-medium leading-relaxed">
+                            Yuk belajar mengenal nama-nama buah, warna, serta manfaat sehatnya ciptaan Allah bersama Bu Guru <span class="text-orange-600 font-bold">Nurul Aulia Sadida</span>!
+                        </p>
+                        <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
+                            <button onclick="switchTab('materi')" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition flex items-center space-x-3">
+                                <i class="fa-solid fa-play text-xl"></i><span>Mulai Belajar</span>
+                            </button>
+                            <button onclick="switchTab('kuis')" class="bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition flex items-center space-x-3">
+                                <i class="fa-solid fa-star text-xl"></i><span>Main Kuis</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="relative w-64 h-64 sm:w-80 sm:h-80 bg-white rounded-full shadow-2xl flex items-center justify-center border-8 border-yellow-200 animate-bounce-slow p-6">
+                            <div class="text-center">
+                                <div class="text-8xl mb-2">🍉🍇🍍</div>
+                                <h3 class="text-xl font-bold text-orange-500">Alhamdulillah!</h3>
+                                <p class="text-sm text-gray-600">Buah segar menyehatkan tubuh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Features Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                <div onclick="switchTab('tujuan')" class="bg-white p-6 rounded-3xl shadow-md hover:shadow-xl transition cursor-pointer border-b-4 border-red-400 text-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-red-100 text-red-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">🎯</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Tujuan Belajar</h3>
+                    <p class="text-sm text-gray-600">Ketahui apa saja yang akan kita pelajari hari ini.</p>
+                </div>
+                <div onclick="switchTab('materi')" class="bg-white p-6 rounded-3xl shadow-md hover:shadow-xl transition cursor-pointer border-b-4 border-green-400 text-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">🍎</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Materi Buah</h3>
+                    <p class="text-sm text-gray-600">Kenali bentuk, warna, dan manfaat buah ciptaan Allah.</p>
+                </div>
+                <div onclick="switchTab('kuis')" class="bg-white p-6 rounded-3xl shadow-md hover:shadow-xl transition cursor-pointer border-b-4 border-amber-400 text-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">🏆</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Kuis Seru</h3>
+                    <p class="text-sm text-gray-600">Uji kemampuan dengan kuis bergambar berhadiah bintang.</p>
+                </div>
+                <div onclick="switchTab('game')" class="bg-white p-6 rounded-3xl shadow-md hover:shadow-xl transition cursor-pointer border-b-4 border-pink-400 text-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">🧩</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Drag & Drop</h3>
+                    <p class="text-sm text-gray-600">Bermain menyusun buah ke dalam keranjang yang tepat.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: TUJUAN PEMBELAJARAN ================= -->
+        <section id="tab-tujuan" class="tab-content hidden">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-green-200">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="bg-green-100 text-green-700 px-4 py-1.5 rounded-full font-bold text-sm">Fase Fondasi – Sentra Persiapan</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-green-700 mt-3">Tujuan Pembelajaran</h2>
+                    <p class="text-gray-600 mt-2">Hal-hal hebat yang akan dicapai oleh anak-anak hebat hari ini!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-yellow-50 to-amber-100 p-6 rounded-3xl border-2 border-yellow-300 shadow-md">
+                        <div class="w-14 h-14 bg-yellow-400 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow">1</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Mengenal Ciptaan Allah</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Peserta didik dapat mengenal berbagai jenis buah-buahan sebagai anugerah dan ciptaan Allah SWT yang Maha Kuasa.</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-3xl border-2 border-green-300 shadow-md">
+                        <div class="w-14 h-14 bg-green-500 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow">2</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Manfaat Kesehatan</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Peserta didik dapat menyebutkan manfaat buah untuk kesehatan tubuh agar kuat, sehat, dan tidak mudah sakit.</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-pink-50 to-rose-100 p-6 rounded-3xl border-2 border-pink-300 shadow-md">
+                        <div class="w-14 h-14 bg-pink-500 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow">3</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Kebiasaan Sehat</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Peserta didik menunjukkan semangat dan kebiasaan gemar mengonsumsi buah segar sebagai makanan sehat sehari-hari.</p>
+                    </div>
+                </div>
+
+                <div class="mt-10 bg-amber-50 border-l-8 border-amber-400 p-6 rounded-2xl flex items-center space-x-4">
+                    <div class="text-4xl">💡</div>
+                    <div>
+                        <h4 class="font-bold text-amber-800 text-lg">Pesan Bu Guru Nurul:</h4>
+                        <p class="text-amber-700 text-sm">"Sebelum makan buah, jangan lupa membaca 'Bismillah' ya anak-anak!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: MATERI (MACAM-MACAM BUAH) ================= -->
+        <section id="tab-materi" class="tab-content hidden">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-orange-200">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="bg-orange-100 text-orange-700 px-4 py-1.5 rounded-full font-bold text-sm">Sentra Persiapan TK A</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-orange-600 mt-3">Macam-Macam Buah</h2>
+                    <p class="text-gray-600 mt-2">Klik pada setiap kartu buah untuk mendengar penjelasan dan suara seru!</p>
+                </div>
+
+                <!-- Buah Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fruitGrid">
+                    <!-- Kartu Buah 1: Apel -->
+                    <div onclick="playFruitSound('apel', 'Apel merah rasanya manis dan segar, kaya akan vitamin C!')" class="bg-gradient-to-b from-red-50 to-red-100 border-4 border-red-300 rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:scale-105 cursor-pointer text-center group animate-wiggle">
+                        <div class="text-7xl mb-4 transform group-hover:scale-110 transition">🍎</div>
+                        <h3 class="text-2xl font-bold text-red-600 mb-1">Buah Apel</h3>
+                        <p class="text-xs font-semibold text-red-500 uppercase tracking-wider mb-3">Warna: Merah / Hijau</p>
+                        <p class="text-gray-700 text-sm bg-white/80 p-3 rounded-2xl shadow-inner">Manfaat: Menjaga kesehatan jantung dan tubuh tetap bugar.</p>
+                        <div class="mt-4 text-red-500 font-bold text-sm flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-volume-high"></i><span>Dengar Suara</span>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Buah 2: Pisang -->
+                    <div onclick="playFruitSound('pisang', 'Pisang berwarna kuning, enak dan memberi banyak energi untuk bermain!')" class="bg-gradient-to-b from-yellow-50 to-yellow-100 border-4 border-yellow-300 rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:scale-105 cursor-pointer text-center group animate-wiggle">
+                        <div class="text-7xl mb-4 transform group-hover:scale-110 transition">🍌</div>
+                        <h3 class="text-2xl font-bold text-yellow-600 mb-1">Buah Pisang</h3>
+                        <p class="text-xs font-semibold text-yellow-600 uppercase tracking-wider mb-3">Warna: Kuning</p>
+                        <p class="text-gray-700 text-sm bg-white/80 p-3 rounded-2xl shadow-inner">Manfaat: Sumber tenaga cepat untuk anak yang aktif.</p>
+                        <div class="mt-4 text-yellow-600 font-bold text-sm flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-volume-high"></i><span>Dengar Suara</span>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Buah 3: Semangka -->
+                    <div onclick="playFruitSound('semangka', 'Semangka sangat segar, merah di dalam, mengandung banyak air!')" class="bg-gradient-to-b from-emerald-50 to-emerald-100 border-4 border-emerald-300 rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:scale-105 cursor-pointer text-center group animate-wiggle">
+                        <div class="text-7xl mb-4 transform group-hover:scale-110 transition">🍉</div>
+                        <h3 class="text-2xl font-bold text-emerald-600 mb-1">Buah Semangka</h3>
+                        <p class="text-xs font-semibold text-emerald-600 uppercase tracking-wider mb-3">Warna: Hijau & Merah</p>
+                        <p class="text-gray-700 text-sm bg-white/80 p-3 rounded-2xl shadow-inner">Manfaat: Menjaga tubuh tetap terhidrasi dan segar.</p>
+                        <div class="mt-4 text-emerald-600 font-bold text-sm flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-volume-high"></i><span>Dengar Suara</span>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Buah 4: Jeruk -->
+                    <div onclick="playFruitSound('jeruk', 'Jeruk kaya akan vitamin C untuk pertahanan tubuh kita!')" class="bg-gradient-to-b from-orange-50 to-orange-100 border-4 border-orange-300 rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:scale-105 cursor-pointer text-center group animate-wiggle">
+                        <div class="text-7xl mb-4 transform group-hover:scale-110 transition">🍊</div>
+                        <h3 class="text-2xl font-bold text-orange-600 mb-1">Buah Jeruk</h3>
+                        <p class="text-xs font-semibold text-orange-600 uppercase tracking-wider mb-3">Warna: Oranye</p>
+                        <p class="text-gray-700 text-sm bg-white/80 p-3 rounded-2xl shadow-inner">Manfaat: Mencegah sariawan dan menjaga daya tahan.</p>
+                        <div class="mt-4 text-orange-600 font-bold text-sm flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-volume-high"></i><span>Dengar Suara</span>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Buah 5: Mangga -->
+                    <div onclick="playFruitSound('mangga', 'Mangga manis dan lezat ciptaan Allah yang luar biasa!')" class="bg-gradient-to-b from-amber-50 to-amber-100 border-4 border-amber-300 rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:scale-105 cursor-pointer text-center group animate-wiggle">
+                        <div class="text-7xl mb-4 transform group-hover:scale-110 transition">🥭</div>
+                        <h3 class="text-2xl font-bold text-amber-600 mb-1">Buah Mangga</h3>
+                        <p class="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-3">Warna: Hijau / Kuning</p>
+                        <p class="text-gray-700 text-sm bg-white/80 p-3 rounded-2xl shadow-inner">Manfaat: Menjaga kesehatan mata dan pencernaan.</p>
+                        <div class="mt-4 text-amber-600 font-bold text-sm flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-volume-high"></i><span>Dengar Suara</span>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Buah 6: Anggur -->
+                    <div onclick="playFruitSound('anggur', 'Anggur bergerombol cantik dan manis rasanya!')" class="bg-gradient-to-b from-purple-50 to-purple-100 border-4 border-purple-300 rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:scale-105 cursor-pointer text-center group animate-wiggle">
+                        <div class="text-7xl mb-4 transform group-hover:scale-110 transition">🍇</div>
+                        <h3 class="text-2xl font-bold text-purple-600 mb-1">Buah Anggur</h3>
+                        <p class="text-xs font-semibold text-purple-600 uppercase tracking-wider mb-3">Warna: Ungu / Hijau</p>
+                        <p class="text-gray-700 text-sm bg-white/80 p-3 rounded-2xl shadow-inner">Manfaat: Kaya antioksidan pelindung sel tubuh.</p>
+                        <div class="mt-4 text-purple-600 font-bold text-sm flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-volume-high"></i><span>Dengar Suara</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio feedback box -->
+                <div id="audioFeedback" class="mt-8 hidden bg-yellow-100 border-4 border-yellow-400 p-4 rounded-2xl text-center text-yellow-800 font-bold text-lg animate-bounce-slow">
+                    🔊 <span id="audioText">Suara buah...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: KUIS INTERAKTIF ================= -->
+        <section id="tab-kuis" class="tab-content hidden">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-pink-200 max-w-3xl mx-auto">
+                <div class="text-center mb-6">
+                    <span class="bg-pink-100 text-pink-700 px-4 py-1.5 rounded-full font-bold text-sm">Kuis Bergambar</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-pink-600 mt-2">Kuis Interaktif Buah</h2>
+                    <p class="text-gray-600 mt-1">Jawab pertanyaan dengan benar dan kumpulkan bintangmu!</p>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quizContainer">
+                    <div class="flex justify-between items-center mb-6 bg-pink-50 p-4 rounded-2xl font-bold text-pink-700">
+                        <span id="questionNum">Pertanyaan 1 dari 4</span>
+                        <span class="flex items-center space-x-1">⭐ Skor: <span id="scoreVal">0</span></span>
+                    </div>
+
+                    <div id="questionBox" class="bg-yellow-50 border-2 border-yellow-300 p-6 rounded-3xl text-center mb-6">
+                        <div id="quizEmoji" class="text-7xl mb-4">🍎</div>
+                        <h3 id="quizQuestionText" class="text-xl sm:text-2xl font-bold text-gray-800">Apa warna buah apel yang matang?</h3>
+                    </div>
+
+                    <div id="optionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Options injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Quiz Result Container -->
+                <div id="quizResult" class="hidden text-center py-10">
+                    <div class="text-8xl mb-4">🏆</div>
+                    <h3 class="text-3xl font-extrabold text-pink-600 mb-2">Hore! Kuis Selesai!</h3>
+                    <p id="finalScoreText" class="text-xl text-gray-700 mb-6">Kamu hebat mendapatkan skor 4 dari 4!</p>
+                    <button onclick="restartQuiz()" class="bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold px-8 py-4 rounded-2xl shadow-lg hover:scale-105 transition">
+                        🔄 Main Kuis Lagi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: DRAG AND DROP GAME ================= -->
+        <section id="tab-game" class="tab-content hidden">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-sky-200">
+                <div class="text-center max-w-2xl mx-auto mb-6">
+                    <span class="bg-sky-100 text-sky-700 px-4 py-1.5 rounded-full font-bold text-sm">Permainan Edukatif</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-sky-600 mt-2">Mencocokkan Buah ke Keranjang</h2>
+                    <p class="text-gray-600 mt-1">Klik atau ketuk buah di bawah, lalu pilih keranjang warna yang sesuai!</p>
+                </div>
+
+                <!-- Game Status Bar -->
+                <div class="flex justify-between items-center mb-6 bg-sky-50 p-4 rounded-2xl font-bold text-sky-700">
+                    <span>Target Buah: <span id="targetFruitName" class="text-orange-600 font-extrabold text-xl">Apel</span></span>
+                    <span>Poin: <span id="gameScore">0</span></span>
+                </div>
+
+                <!-- Fruit Selection to Drag/Click -->
+                <div class="text-center mb-6">
+                    <p class="text-sm text-gray-500 mb-3 font-semibold">Pilih buah yang sesuai dengan target di atas:</p>
+                    <div id="gameFruitPool" class="flex flex-wrap justify-center gap-4">
+                        <!-- Fruit items -->
+                        <div onclick="selectGameFruit('Apel', '🍎', 'merah')" class="w-20 h-20 bg-red-100 border-4 border-red-300 rounded-2xl flex items-center justify-center text-4xl cursor-pointer hover:scale-110 transition shadow">🍎</div>
+                        <div onclick="selectGameFruit('Pisang', '🍌', 'kuning')" class="w-20 h-20 bg-yellow-100 border-4 border-yellow-300 rounded-2xl flex items-center justify-center text-4xl cursor-pointer hover:scale-110 transition shadow">🍌</div>
+                        <div onclick="selectGameFruit('Jeruk', '🍊', 'oranye')" class="w-20 h-20 bg-orange-100 border-4 border-orange-300 rounded-2xl flex items-center justify-center text-4xl cursor-pointer hover:scale-110 transition shadow">🍊</div>
+                        <div onclick="selectGameFruit('Semangka', '🍉', 'hijau')" class="w-20 h-20 bg-green-100 border-4 border-green-300 rounded-2xl flex items-center justify-center text-4xl cursor-pointer hover:scale-110 transition shadow">🍉</div>
+                    </div>
+                </div>
+
+                <!-- Baskets Target Drop Zones -->
+                <div class="mt-8">
+                    <p class="text-sm text-gray-500 mb-3 text-center font-semibold">Masukkan ke keranjang warna yang benar:</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div onclick="dropIntoBasket('merah')" class="bg-red-50 border-4 border-dashed border-red-400 rounded-3xl p-6 text-center cursor-pointer hover:bg-red-100 transition">
+                            <div class="text-5xl mb-2">🧺</div>
+                            <h4 class="font-bold text-red-600">Keranjang Merah</h4>
+                        </div>
+                        <div onclick="dropIntoBasket('kuning')" class="bg-yellow-50 border-4 border-dashed border-yellow-400 rounded-3xl p-6 text-center cursor-pointer hover:bg-yellow-100 transition">
+                            <div class="text-5xl mb-2">🧺</div>
+                            <h4 class="font-bold text-yellow-600">Keranjang Kuning</h4>
+                        </div>
+                        <div onclick="dropIntoBasket('oranye')" class="bg-orange-50 border-4 border-dashed border-orange-400 rounded-3xl p-6 text-center cursor-pointer hover:bg-orange-100 transition">
+                            <div class="text-5xl mb-2">🧺</div>
+                            <h4 class="font-bold text-orange-600">Keranjang Oranye</h4>
+                        </div>
+                        <div onclick="dropIntoBasket('hijau')" class="bg-green-50 border-4 border-dashed border-green-400 rounded-3xl p-6 text-center cursor-pointer hover:bg-green-100 transition">
+                            <div class="text-5xl mb-2">🧺</div>
+                            <h4 class="font-bold text-green-600">Keranjang Hijau</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="gameMessage" class="mt-6 text-center text-lg font-bold text-emerald-600 min-h-[32px]"></div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 6: TENTANG ================= -->
+        <section id="tab-tentang" class="tab-content hidden">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-blue-200 max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-brandYellow to-brandOrange rounded-full flex items-center justify-center text-5xl mx-auto mb-4 shadow-lg border-4 border-white animate-bounce-slow">
+                        👩‍🏫
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-blue-600">Tentang Pengembang</h2>
+                    <p class="text-gray-600 mt-1">Media pembelajaran interaktif untuk anak usia dini</p>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-blue-300 rounded-3xl p-6 mb-6 space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-blue-500 text-white rounded-2xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-semibold uppercase">Nama Pengembang</p>
+                            <h3 class="text-xl font-bold text-gray-800">Nurul Aulia Sadida</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-green-500 text-white rounded-2xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-semibold uppercase">Sasaran & Sentra</p>
+                            <h3 class="text-xl font-bold text-gray-800">Siswa TK A (Fase Fondasi – Sentra Persiapan)</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-orange-500 text-white rounded-2xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-semibold uppercase">Topik Utama</p>
+                            <h3 class="text-xl font-bold text-gray-800">Buah Ciptaan Allah (Macam-Macam Buah & Manfaatnya)</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-300 p-6 rounded-3xl text-center">
+                    <h4 class="text-lg font-bold text-orange-700 mb-2">🌟 Pesan Pendidik 🌟</h4>
+                    <p class="text-gray-700 italic">
+                        "Semoga media pembelajaran berbasis web ini dapat membantu anak-anak mengenal anugerah dan ciptaan Allah SWT dengan cara yang menyenangkan, interaktif, dan penuh warna!"
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t-2 border-gray-100 py-6 text-center text-sm text-gray-500 mt-auto">
+        <p>✨ Media Pembelajaran Interaktif Buah Ciptaan Allah • Dibuat oleh <span class="font-bold text-orange-600">Nurul Aulia Sadida</span> untuk TK A ✨</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        /**
+         * Tab Navigation Handler for Single Page Application (SPA)
+         * @param {string} tabId - The ID of the tab to display
+         */
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.add('hidden'));
+
+            // Show selected tab content
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.classList.remove('hidden');
+            }
+
+            // Update active state on navigation buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.remove('bg-white', 'text-gray-700');
+                    btn.classList.add('bg-brandYellow', 'text-gray-800', 'shadow-md');
+                } else {
+                    btn.classList.remove('bg-brandYellow', 'text-gray-800', 'shadow-md');
+                    btn.classList.add('bg-white', 'text-gray-700');
+                }
+            });
+
+            // Close mobile menu if open
+            const navMenu = document.getElementById('navMenu');
+            if (!navMenu.classList.contains('hidden') && window.innerWidth < 768) {
+                navMenu.classList.add('hidden');
+            }
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * Toggle mobile navigation drawer
+         */
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('hidden');
+        }
+
+        /**
+         * Play audio/speech simulation for fruit items when clicked
+         * @param {string} fruitName - Name of the fruit
+         * @param {string} desc - Description text
+         */
+        function playFruitSound(fruitName, desc) {
+            const feedbackBox = document.getElementById('audioFeedback');
+            const audioText = document.getElementById('audioText');
+            
+            audioText.innerText = desc;
+            feedbackBox.classList.remove('hidden');
+
+            // Use SpeechSynthesis API if supported by browser
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop previous speech
+                const utterance = new SpeechSynthesisUtterance(desc);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+
+            // Hide feedback box after 4 seconds
+            setTimeout(() => {
+                feedbackBox.classList.add('hidden');
+            }, 4000);
+        }
+
+        /* ================= KUIS INTERAKTIF LOGIC ================= */
+        const quizData = [
+            {
+                emoji: "🍎",
+                question: "Apa warna buah apel yang matang dan segar?",
+                options: ["Merah / Hijau", "Biru Langit", "Hitam Legam", "Abu-abu"],
+                answer: 0
+            },
+            {
+                emoji: "🍌",
+                question: "Buah pisang yang enak dimakan berkulit warna apa?",
+                options: ["Kuning", "Ungu Tua", "Pink Menyala", "Putih Bersih"],
+                answer: 0
+            },
+            {
+                emoji: "🍉",
+                question: "Semua buah yang manis dan menyegarkan adalah ciptaan siapa?",
+                options: ["Allah SWT", "Manusia", "Robot Canggih", "Pohon Buatan"],
+                answer: 0
+            },
+            {
+                emoji: "🍊",
+                question: "Buah jeruk mengandung vitamin yang baik untuk mencegah...",
+                options: ["Sariawan & Jaga Imun", "Sakit Perut", "Ngantuk", "Pusing Kepala"],
+                answer: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuizQuestion() {
+            const q = quizData[currentQuestionIndex];
+            document.getElementById('questionNum').innerText = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            document.getElementById('quizEmoji').innerText = q.emoji;
+            document.getElementById('quizQuestionText').innerText = q.question;
+            document.getElementById('scoreVal').innerText = score;
+
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "bg-white border-2 border-pink-300 hover:bg-pink-100 text-gray-800 font-bold p-4 rounded-2xl shadow-sm transition transform hover:scale-102 text-lg";
+                btn.innerText = opt;
+                btn.onclick = () => checkQuizAnswer(idx, q.answer);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedIndex, correctIndex) {
+            if (selectedIndex === correctIndex) {
+                score += 1;
+                playCelebrationSound();
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+            document.getElementById('finalScoreText').innerText = `Hebat sekali! Skor kamu ${score} dari ${quizData.length} bintang! ⭐`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.getElementById('quizResult').classList.add('hidden');
+            loadQuizQuestion();
+        }
+
+        function playCelebrationSound() {
+            if ('speechSynthesis' in window) {
+                const utter = new SpeechSynthesisUtterance("Hebat sekali! Benar!");
+                utter.lang = 'id-ID';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* ================= DRAG & DROP GAME LOGIC ================= */
+        let currentGameFruit = { name: 'Apel', emoji: '🍎', color: 'merah' };
+        let gameScoreVal = 0;
+
+        function selectGameFruit(name, emoji, color) {
+            currentGameFruit = { name, emoji, color };
+            document.getElementById('targetFruitName').innerText = `${emoji} ${name}`;
+            document.getElementById('gameMessage').innerText = `Siladores! Sekarang pilih keranjang ${color} untuk buah ${name}!`;
+        }
+
+        function dropIntoBasket(basketColor) {
+            const msgEl = document.getElementById('gameMessage');
+            if (basketColor === currentGameFruit.color) {
+                gameScoreVal += 10;
+                document.getElementById('gameScore').innerText = gameScoreVal;
+                msgEl.className = "mt-6 text-center text-lg font-bold text-emerald-600 animate-bounce-slow";
+                msgEl.innerText = `🎉 Yey! Benar! Buah ${currentGameFruit.name} masuk ke keranjang ${basketColor}!`;
+                
+                // Randomize next target fruit
+                const fruitsList = [
+                    { name: 'Apel', emoji: '🍎', color: 'merah' },
+                    { name: 'Pisang', emoji: '🍌', color: 'kuning' },
+                    { name: 'Jeruk', emoji: '🍊', color: 'oranye' },
+                    { name: 'Semangka', emoji: '🍉', color: 'hijau' }
+                ];
+                const nextFruit = fruitsList[Math.floor(Math.random() * fruitsList.length)];
+                selectGameFruit(nextFruit.name, nextFruit.emoji, nextFruit.color);
+            } else {
+                msgEl.className = "mt-6 text-center text-lg font-bold text-rose-600";
+                msgEl.innerText = `❌ Ups! Keranjang belum tepat. Coba cari keranjang warna ${currentGameFruit.color}!`;
+            }
+        }
+
+        // Initialize quiz & game on window load
+        window.onload = function() {
+            loadQuizQuestion();
+            selectGameFruit('Apel', '🍎', 'merah');
+        };
+    </script>
+</body>
+</html>
